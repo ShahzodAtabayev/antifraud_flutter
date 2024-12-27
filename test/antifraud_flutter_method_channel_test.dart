@@ -27,6 +27,6 @@ void main() {
   });
 
   test('initialize', () async {
-    expect(await platform.initialize(host: '', tokenType: '', accessToken: ''), null);
+    expect(await platform.initialize(host: ''), null);
   });
 }

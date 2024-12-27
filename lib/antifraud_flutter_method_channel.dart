@@ -11,19 +11,11 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   final methodChannel = const MethodChannel('antifraud_flutter');
 
   @override
-  Future<Either<String, void>> initialize({
-    required String host,
-    required String tokenType,
-    required String accessToken,
-  }) async {
+  Future<Either<String, void>> initialize({required String host}) async {
     try {
       await methodChannel.invokeMethod<void>(
         'initialize',
-        {
-          'host': host,
-          'token_type': tokenType,
-          'access_token': accessToken,
-        },
+        {'host': host},
       );
       return const Right(null);
     } on PlatformException catch (e) {
@@ -48,9 +40,14 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   }
 
   @override
-  Future<Either<String, void>> logout() async {
+  Future<Either<String, void>> detectFraud({required String code}) async {
     try {
-      await methodChannel.invokeMethod<void>('logout');
+      await methodChannel.invokeMethod<void>(
+        'detect_fraud',
+        {
+          'code': code,
+        },
+      );
       return const Right(null);
     } on PlatformException catch (e) {
       return Left(e.message ?? '');
@@ -58,9 +55,9 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   }
 
   @override
-  Future<Either<String, void>> refreshToken({required String token}) async {
+  Future<Either<String, void>> logout() async {
     try {
-      await methodChannel.invokeMethod<void>('refresh_token', {'token': token});
+      await methodChannel.invokeMethod<void>('logout');
       return const Right(null);
     } on PlatformException catch (e) {
       return Left(e.message ?? '');

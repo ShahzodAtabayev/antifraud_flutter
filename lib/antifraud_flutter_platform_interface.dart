@@ -24,11 +24,7 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Either<String, void>> initialize({
-    required String host,
-    required String tokenType,
-    required String accessToken,
-  }) {
+  Future<Either<String, void>> initialize({required String host}) {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
@@ -36,11 +32,11 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('verifySMSCode() has not been implemented.');
   }
 
-  Future<Either<String, void>> logout() {
-    throw UnimplementedError('logout() has not been implemented.');
+  Future<Either<String, void>> detectFraud({required String code}) {
+    throw UnimplementedError('detectFraud() has not been implemented.');
   }
 
-  Future<Either<String, void>> refreshToken({required String token}) {
-    throw UnimplementedError('refreshToken() has not been implemented.');
+  Future<Either<String, void>> logout() {
+    throw UnimplementedError('logout() has not been implemented.');
   }
 }

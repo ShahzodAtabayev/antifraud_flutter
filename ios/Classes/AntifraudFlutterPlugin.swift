@@ -16,12 +16,10 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         case "initialize":
             guard let args = call.arguments as? [String: Any],
                   let host = args["host"] as? String,
-                  let tokenType = args["token_type"] as? String,
-                  let accessToken = args["access_token"] as? String else {
                 result(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid arguments passed", details: nil))
                 return
             }
-            initialize(host: host, tokenType: tokenType, accessToken: accessToken, result: result)
+            initialize(host: host, result: result)
             
         case "verify_sms_code":
             guard let args = call.arguments as? [String: Any],
@@ -31,15 +29,25 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                 return
             }
             verifySmsCode(phoneNumber: phoneNumber, smsCode: smsCode, result: result)
-            
+            return
+
+        case "detect_fraud":
+            guard let args = call.arguments as? [String: Any],
+                           let smsCode = args["code"] as? String else {
+                         result(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid arguments passed", details: nil))
+                         return
+            }
+         detectFraud(smsCode: smsCode, result: result)
+         return
         case "logout":
             logout(result: result)
+            return
         default:
             result(FlutterMethodNotImplemented)
         }
     }
     
-    private func initialize(host: String, tokenType: String, accessToken: String, result: @escaping FlutterResult) {
+    private func initialize(host: String, result: @escaping FlutterResult) {
         library = AntiFraudLibrary(host: host)
         
         library?.initialization { response in

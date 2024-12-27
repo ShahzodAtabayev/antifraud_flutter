@@ -7,11 +7,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements AntifraudFlutterPlatform {
   @override
-  Future<Either<String, void>> initialize({
-    required String host,
-    required String tokenType,
-    required String accessToken,
-  }) {
+  Future<Either<String, void>> initialize({required String host}) {
     throw UnimplementedError();
   }
 
@@ -29,6 +25,12 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<String, void>> detectFraud({required String code}) {
+    // TODO: implement detectFraud
+    throw UnimplementedError();
+  }
 }
 
 void main() {
@@ -42,6 +44,6 @@ void main() {
     MockAntifraudFlutterPlatform fakePlatform = MockAntifraudFlutterPlatform();
     AntifraudFlutterPlatform.instance = fakePlatform;
 
-    expect(await AntifraudFlutter.initialize(host: '', tokenType: '', accessToken: ''), null);
+    expect(await AntifraudFlutter.initialize(host: ''), null);
   });
 }

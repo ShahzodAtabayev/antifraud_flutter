@@ -7,7 +7,6 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import uz.tbm.antifraudmobilesdk.AntiFraudLibrary
-import uz.tbm.antifraudmobilesdk.model.public.AntiFraudConfiguration
 
 /** AntifraudFlutterPlugin */
 class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
@@ -23,9 +22,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         when (call.method) {
             "initialize" -> {
                 val host = call.argument<String>("host") ?: ""
-                val tokenType = call.argument<String>("token_type") ?: ""
-                val accessToken = call.argument<String>("access_token") ?: ""
-                initializeSDK(call.context(), host, tokenType, accessToken, result)
+                initializeSDK(call.context(), host, result)
             }
 
             "verify_sms_code" -> {
@@ -34,12 +31,12 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 verifySMSCode(code, phoneNumber, result)
             }
 
-            "logout" -> logout(result)
-
-            "refresh_token" -> {
-                val token = call.argument<String>("token") ?: ""
-                refreshToken(token, result)
+            "detect_fraud" -> {
+                val code = call.argument<String>("code") ?: ""
+                detectFraud(code, result)
             }
+
+            "logout" -> logout(result)
 
             else -> result.notImplemented()
         }
@@ -48,18 +45,14 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     private fun initializeSDK(
         context: Context,
         host: String,
-        tokenType: String,
-        accessToken: String,
         result: MethodChannel.Result
     ) {
         try {
             sdk = AntiFraudLibrary(
                 host = host,
                 context = context,
-                contentResolver = context.contentResolver
             )
-            val config = AntiFraudConfiguration(tokenType = tokenType, accessToken = accessToken)
-            sdk!!.initialize(config) { r ->
+            sdk!!.initialize { r ->
                 r.onSuccess {
                     Log.d("AntifraudFlutterPlugin", "SDK initialized successfully")
                     result.success("SDK initialized successfully")
@@ -89,6 +82,20 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
+    private fun detectFraud(code: String, result: MethodChannel.Result) {
+        if (!isSDKInitialized(result)) return
+        sdk!!.detectFraud(code = code) { r ->
+            r.onSuccess {
+                Log.d("AntifraudFlutterPlugin", "Detect fraud successfully")
+                result.success("Detect fraud successfully")
+            }
+            r.onFailure {
+                Log.e("AntifraudFlutterPlugin", "SMS verification failed: ${it.message}")
+                result.error("DETECT_FRAUD_ERROR", it.message, null)
+            }
+        }
+    }
+
     private fun logout(result: MethodChannel.Result) {
         if (!isSDKInitialized(result)) return
         sdk!!.logout { r ->
@@ -101,20 +108,6 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 result.error("LOGOUT_ERROR", it.message, null)
             }
         }
-    }
-
-    private fun refreshToken(token: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized(result)) return
-        sdk!!.refreshToken(token).fold(
-            onSuccess = {
-                Log.d("AntifraudFlutterPlugin", "Token refreshed successfully")
-                result.success("Token refreshed successfully")
-            },
-            onFailure = {
-                Log.e("AntifraudFlutterPlugin", "Token refresh failed: ${it.message}")
-                result.error("REFRESH_TOKEN_ERROR", it.message, null)
-            }
-        )
     }
 
     private fun isSDKInitialized(result: MethodChannel.Result): Boolean {
