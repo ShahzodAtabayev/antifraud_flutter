@@ -18,9 +18,8 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "uz.tbm.antifraud_flutter"
-
-    compileSdk = 34
+    namespace "uz.tbm.antifraud_flutter.antifraud_flutter"
+    compileSdk 34
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,7 +41,7 @@ android {
 
     dependencies {
         testImplementation("org.jetbrains.kotlin:kotlin-test")
-        testImplementation("org.mockito:mockito-core:5.0.0")
+        testImplementation("org.mockito:mockito-core:5.1.0")
     }
 
     testOptions {

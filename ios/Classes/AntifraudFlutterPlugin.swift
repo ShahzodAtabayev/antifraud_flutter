@@ -15,12 +15,12 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         switch call.method {
         case "initialize":
             guard let args = call.arguments as? [String: Any],
-                  let host = args["host"] as? String,
+                  let host = args["host"] as? String else {
                 result(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid arguments passed", details: nil))
                 return
             }
             initialize(host: host, result: result)
-            
+            return
         case "verify_sms_code":
             guard let args = call.arguments as? [String: Any],
                   let phoneNumber = args["phone_number"] as? String,

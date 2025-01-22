@@ -1,3 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="uz.tbm.antifraud_flutter.antifraud_flutter">
-</manifest>
+<manifest package="uz.tbm.antifraud_flutter.antifraud_flutter" />
