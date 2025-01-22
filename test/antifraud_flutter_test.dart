@@ -17,11 +17,6 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   }
 
   @override
-  Future<Either<String, void>> refreshToken({required String token}) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) {
     throw UnimplementedError();
   }

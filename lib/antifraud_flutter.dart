@@ -1,10 +1,11 @@
-import 'antifraud_flutter_platform_interface.dart';
-import 'package:either_dart/src/either.dart';
+import 'package:either_dart/either.dart';
 
-class AntifraudFlutter {
-  static Future<Either<String, void>> initialize({
-    required String host,
-  }) {
+import 'antifraud_flutter_platform_interface.dart';
+
+sealed class AntifraudFlutter {
+  const AntifraudFlutter._();
+
+  static Future<Either<String, void>> initialize({required String host}) {
     return AntifraudFlutterPlatform.instance.initialize(host: host);
   }
 
