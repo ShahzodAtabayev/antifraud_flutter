@@ -21,6 +21,9 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             }
             initialize(host: host, result: result)
             return
+        case "initialized":
+            isInitialized(result: result)
+            return
         case "verify_sms_code":
             guard let args = call.arguments as? [String: Any],
                   let phoneNumber = args["phone_number"] as? String,
@@ -60,6 +63,10 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                 result(FlutterError(code: "INIT_ERROR", message: "BASE_ERROR", details: nil))
             }
         }
+    }
+    private func isInitialized(result: @escaping FlutterResult) {
+        let isInitialized = library?.isInitialized()
+        result(isInitialized ?? false)
     }
     
     private func verifySmsCode(phoneNumber: String, smsCode: String, result: @escaping FlutterResult) {

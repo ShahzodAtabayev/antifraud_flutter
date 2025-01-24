@@ -12,6 +12,11 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   }
 
   @override
+  Future<Either<String, bool>> isInitialized() {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Either<String, void>> logout() {
     throw UnimplementedError();
   }
@@ -31,14 +36,20 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
 void main() {
   final AntifraudFlutterPlatform initialPlatform = AntifraudFlutterPlatform.instance;
 
-  test('$MethodChannelAntifraudFlutter is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelAntifraudFlutter>());
-  });
+  test(
+    '$MethodChannelAntifraudFlutter is the default instance',
+    () {
+      expect(initialPlatform, isInstanceOf<MethodChannelAntifraudFlutter>());
+    },
+  );
 
-  test('initialize', () async {
-    MockAntifraudFlutterPlatform fakePlatform = MockAntifraudFlutterPlatform();
-    AntifraudFlutterPlatform.instance = fakePlatform;
+  test(
+    'initialize',
+    () async {
+      MockAntifraudFlutterPlatform fakePlatform = MockAntifraudFlutterPlatform();
+      AntifraudFlutterPlatform.instance = fakePlatform;
 
-    expect(await AntifraudFlutter.initialize(host: ''), null);
-  });
+      expect(await AntifraudFlutter.initialize(host: ''), null);
+    },
+  );
 }

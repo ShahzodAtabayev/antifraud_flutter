@@ -28,6 +28,10 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
+  Future<Either<String, bool>> isInitialized() {
+    throw UnimplementedError('initialized() has not been implemented.');
+  }
+
   Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) {
     throw UnimplementedError('verifySMSCode() has not been implemented.');
   }

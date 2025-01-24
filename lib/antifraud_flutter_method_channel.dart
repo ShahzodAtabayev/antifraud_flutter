@@ -13,11 +13,18 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   @override
   Future<Either<String, void>> initialize({required String host}) async {
     try {
-      await methodChannel.invokeMethod<void>(
-        'initialize',
-        {'host': host},
-      );
+      await methodChannel.invokeMethod<void>('initialize', {'host': host});
       return const Right(null);
+    } on PlatformException catch (e) {
+      return Left(e.message ?? '');
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> isInitialized() async {
+    try {
+      final result = await methodChannel.invokeMethod<bool?>('initialized');
+      return Right(result ?? false);
     } on PlatformException catch (e) {
       return Left(e.message ?? '');
     }
@@ -28,10 +35,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
     try {
       await methodChannel.invokeMethod<void>(
         'verify_sms_code',
-        {
-          'phone_number': phoneNumber,
-          'code': code,
-        },
+        {'phone_number': phoneNumber, 'code': code},
       );
       return const Right(null);
     } on PlatformException catch (e) {
@@ -42,12 +46,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   @override
   Future<Either<String, void>> detectFraud({required String code}) async {
     try {
-      await methodChannel.invokeMethod<void>(
-        'detect_fraud',
-        {
-          'code': code,
-        },
-      );
+      await methodChannel.invokeMethod<void>('detect_fraud', {'code': code});
       return const Right(null);
     } on PlatformException catch (e) {
       return Left(e.message ?? '');

@@ -9,6 +9,10 @@ sealed class AntifraudFlutter {
     return AntifraudFlutterPlatform.instance.initialize(host: host);
   }
 
+  static Future<Either<String, bool>> isInitialized() {
+    return AntifraudFlutterPlatform.instance.isInitialized();
+  }
+
   static Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) {
     return AntifraudFlutterPlatform.instance.verifySMSCode(code: code, phoneNumber: phoneNumber);
   }
