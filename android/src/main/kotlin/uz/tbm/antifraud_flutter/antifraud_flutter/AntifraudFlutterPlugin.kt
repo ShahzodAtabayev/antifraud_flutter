@@ -31,6 +31,12 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 verifySMSCode(code, phoneNumber, result)
             }
 
+            "confirm_face" -> {
+                val document = call.argument<String>("document") ?: ""
+                val birthDate = call.argument<String>("birth_date") ?: ""
+                confirmFace(document, birthDate, result)
+            }
+
             "detect_fraud" -> {
                 val code = call.argument<String>("code") ?: ""
                 detectFraud(code, result)
@@ -77,6 +83,21 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             }
             r.onFailure {
                 Log.e("AntifraudFlutterPlugin", "SMS verification failed: ${it.message}")
+                result.error("VERIFY_ERROR", it.message, null)
+            }
+        }
+    }
+
+
+    private fun confirmFace(document: String, birthDate: String, result: MethodChannel.Result) {
+        if (!isSDKInitialized(result)) return
+        sdk!!.confirmFace(document = document, birthDate = birthDate) { r ->
+            r.onSuccess {
+                Log.d("AntifraudFlutterPlugin", "Confirm face successfully")
+                result.success("Confirm face successfully")
+            }
+            r.onFailure {
+                Log.e("AntifraudFlutterPlugin", "Confirm face verification failed: ${it.message}")
                 result.error("VERIFY_ERROR", it.message, null)
             }
         }
