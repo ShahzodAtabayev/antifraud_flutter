@@ -1,6 +1,6 @@
+import 'package:antifraud_flutter/antifraud_flutter.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 
 void main() {
   runApp(const MyApp());
@@ -20,8 +20,21 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {}
+  Future<void> initPlatformState() async {
+    try {
+      /// Anti Fraud SDK
+      final result = await AntifraudFlutter.initialize(host: 'http://172.30.136.12:8080');
+      result.fold(
+        (f) {},
+        (r) {},
+      );
+      final isInitialized = await AntifraudFlutter.isInitialized();
+      isInitialized.fold(
+        (f) {},
+        (r) {},
+      );
+    } catch (_) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +43,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: const Center(
-          child: Text('Running on'),
+        body: Center(
+          child: GestureDetector(
+            onTap: () {
+              initPlatformState();
+            },
+            child: Text('Running on'),
+          ),
         ),
       ),
     );

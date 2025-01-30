@@ -40,6 +40,10 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('detectFraud() has not been implemented.');
   }
 
+  Future<Either<String, void>> confirmFace({required String document, required String birthDate}) {
+    throw UnimplementedError('confirmFace() has not been implemented.');
+  }
+
   Future<Either<String, void>> logout() {
     throw UnimplementedError('logout() has not been implemented.');
   }

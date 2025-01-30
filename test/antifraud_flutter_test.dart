@@ -31,6 +31,12 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
     // TODO: implement detectFraud
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<String, void>> confirmFace({required String document, required String birthDate}) {
+    // TODO: implement confirmFace
+    throw UnimplementedError();
+  }
 }
 
 void main() {

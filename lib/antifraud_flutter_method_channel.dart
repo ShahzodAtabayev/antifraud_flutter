@@ -54,6 +54,16 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   }
 
   @override
+  Future<Either<String, void>> confirmFace({required String document, required String birthDate}) async {
+    try {
+      await methodChannel.invokeMethod<void>('confirm_face', {'document': document, 'birth_date': birthDate});
+      return const Right(null);
+    } on PlatformException catch (e) {
+      return Left(e.message ?? '');
+    }
+  }
+
+  @override
   Future<Either<String, void>> logout() async {
     try {
       await methodChannel.invokeMethod<void>('logout');
