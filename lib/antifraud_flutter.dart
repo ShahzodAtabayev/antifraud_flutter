@@ -17,7 +17,7 @@ sealed class AntifraudFlutter {
     return AntifraudFlutterPlatform.instance.verifySMSCode(code: code, phoneNumber: phoneNumber);
   }
 
-  static Future<Either<String, void>> detectFraud({required String phoneNumber, required String code}) {
+  static Future<Either<String, void>> detectFraud({required String code}) {
     return AntifraudFlutterPlatform.instance.detectFraud(code: code);
   }
 
