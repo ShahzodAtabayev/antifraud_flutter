@@ -57,6 +57,10 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             }
             detectFraud(smsCode: smsCode, result: result)
             return
+            
+        case "make_operation":
+            makeOperation(result: result)
+            return
         case "confirm_face":
             guard let args = call.arguments as? [String: Any],
                 let document = args["document"] as? String,
@@ -190,6 +194,34 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
 
+    private func makeOperation(result: @escaping FlutterResult) {
+        guard let library = library else {
+            result(
+                FlutterError(
+                    code: "INIT_ERROR", message: "SDK is not initialized",
+                    details: nil))
+            return
+        }
+        library.makeOperation { response in
+            switch response {
+            case .success:
+                result("Session id update successfully")
+            case .failure(let error):
+                result(
+                    FlutterError(
+                        code: "MAKE_OPERATION_ERROR",
+                        message: error.localizedDescription, details: nil))
+            @unknown default:
+                result(
+                    FlutterError(
+                        code: "INIT_ERROR", message: "BASE_ERROR", details: nil)
+                )
+            }
+
+        }
+    }
+
+    
     private func confirmFace(
         document: String, birthDate: String, result: @escaping FlutterResult
     ) {

@@ -21,6 +21,10 @@ sealed class AntifraudFlutter {
     return AntifraudFlutterPlatform.instance.detectFraud(code: code);
   }
 
+  static Future<Either<String, void>> makeOperation() {
+    return AntifraudFlutterPlatform.instance.makeOperation();
+  }
+
   static Future<Either<String, void>> confirmFace({required String document, required String birthDate}) {
     return AntifraudFlutterPlatform.instance.confirmFace(document: document, birthDate: birthDate);
   }

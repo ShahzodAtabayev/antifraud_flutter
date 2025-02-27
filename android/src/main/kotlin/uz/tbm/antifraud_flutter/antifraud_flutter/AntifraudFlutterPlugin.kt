@@ -42,6 +42,8 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 detectFraud(code, result)
             }
 
+            "make_operation" -> makeOperation(result)
+
             "logout" -> logout(result)
 
             else -> result.notImplemented()
@@ -127,6 +129,20 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             r.onFailure {
                 Log.e("AntifraudFlutterPlugin", "Logout failed: ${it.message}")
                 result.error("LOGOUT_ERROR", it.message, null)
+            }
+        }
+    }
+
+    private fun makeOperation(result: MethodChannel.Result) {
+        if (!isSDKInitialized(result)) return
+        sdk!!.makeOperation { r ->
+            r.onSuccess {
+                Log.d("AntifraudFlutterPlugin", "Make Operation successful")
+                result.success("Make Operation successful")
+            }
+            r.onFailure {
+                Log.e("AntifraudFlutterPlugin", "Make Operation failed: ${it.message}")
+                result.error("MAKE_OPERATION_ERROR", it.message, null)
             }
         }
     }
