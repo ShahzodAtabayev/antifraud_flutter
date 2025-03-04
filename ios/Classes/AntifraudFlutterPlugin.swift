@@ -147,8 +147,6 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                     details: nil))
             return
         }
-        print("birthDate: \(birthDate)")
-        print("document: \(document)")
         library.confirmFace(birthDate: birthDate, document: document) {
             response in
             switch response {
@@ -192,7 +190,6 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                         code: "INIT_ERROR", message: "BASE_ERROR", details: nil)
                 )
             }
-
         }
     }
 
