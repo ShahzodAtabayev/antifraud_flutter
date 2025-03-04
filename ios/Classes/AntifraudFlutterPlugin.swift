@@ -72,7 +72,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                         message: "Invalid arguments passed", details: nil))
                 return
             }
-            confirmFace(document: document, birthDate: birthDate, result: result)
+            confirmFace(birthDate: birthDate, document: document, result: result)
             return
         case "logout":
             logout(result: result)
@@ -212,38 +212,6 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                 result(
                     FlutterError(
                         code: "MAKE_OPERATION_ERROR",
-                        message: error.localizedDescription, details: nil))
-            @unknown default:
-                result(
-                    FlutterError(
-                        code: "INIT_ERROR", message: "BASE_ERROR", details: nil)
-                )
-            }
-
-        }
-    }
-
-    
-    private func confirmFace(
-        document: String, birthDate: String, result: @escaping FlutterResult
-    ) {
-        guard let library = library else {
-            result(
-                FlutterError(
-                    code: "INIT_ERROR", message: "SDK is not initialized",
-                    details: nil))
-            return
-        }
-        library.confirmFace(birthDate: birthDate, document: document) {
-            response in
-            switch response {
-            case .success:
-                result("Confirmation verified successfully")
-            case .failure(let error):
-            print("sasasa---------------------------- .failure")
-                result(
-                    FlutterError(
-                        code: "DETECT_FRAUD_ERROR",
                         message: error.localizedDescription, details: nil))
             @unknown default:
                 result(
