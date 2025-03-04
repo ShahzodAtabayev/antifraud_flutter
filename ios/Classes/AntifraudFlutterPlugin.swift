@@ -238,6 +238,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .success:
                 result("Confirmation verified successfully")
             case .failure(let error):
+            print("sasasa---------------------------- .failure")
                 result(
                     FlutterError(
                         code: "DETECT_FRAUD_ERROR",

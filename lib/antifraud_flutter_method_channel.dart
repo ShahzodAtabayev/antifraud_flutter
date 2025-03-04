@@ -69,6 +69,10 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       await methodChannel.invokeMethod<void>('confirm_face', {'document': document, 'birth_date': birthDate});
       return const Right(null);
     } on PlatformException catch (e) {
+      print('s-================= ${e.code}');
+      print('s-================= ${e.message}');
+      print('s-================= ${e.details}');
+      print('s-================= ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
