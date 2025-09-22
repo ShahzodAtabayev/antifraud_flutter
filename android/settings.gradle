@@ -6,6 +6,14 @@ pluginManagement {
     }
 }
 
+val githubProperties = Properties().apply {
+    val localPropsFile = rootProject.file("local.properties")
+    if (localPropsFile.exists()) {
+        load(FileInputStream(localPropsFile))
+    }
+}
+val projectID = "3"
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,13 +21,13 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {
             name = "GitLab"
-            url = uri("https://git.rtmc.uz/api/v4/projects/3/packages/maven")
-            credentials(HttpHeaderCredentials) {
+            url = uri("https://git.rtmc.uz/api/v4/projects/$projectID/packages/maven")
+            credentials(HttpHeaderCredentials::class) {
                 name = "Private-Token"
-                value = "glpat--qZJsybnvhRJExJnZPBS"
+                value = githubProperties["gpr.key"]?.toString() ?: "NO_TOKEN"
             }
             authentication {
-                header(HttpHeaderAuthentication)
+                create<HttpHeaderAuthentication>("header")
             }
         }
     }
