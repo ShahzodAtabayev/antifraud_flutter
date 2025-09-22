@@ -24,7 +24,7 @@ dependencyResolutionManagement {
             url = uri("https://git.rtmc.uz/api/v4/projects/$projectID/packages/maven")
             credentials(HttpHeaderCredentials::class) {
                 name = "Private-Token"
-                value = githubProperties["gpr.key"]?.toString() ?: "NO_TOKEN"
+                value = githubProperties["gpr.telecomKey"]?.toString() ?: "NO_TOKEN"
             }
             authentication {
                 create<HttpHeaderAuthentication>("header")
