@@ -10,19 +10,21 @@ import uz.tbm.antifraudmobilesdk.AntiFraudLibrary
 
 /** AntifraudFlutterPlugin */
 class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
+    private lateinit var context: Context
     private lateinit var channel: MethodChannel
     private var sdk: AntiFraudLibrary? = null // SDK instance
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "antifraud_flutter")
         channel.setMethodCallHandler(this)
+        context = flutterPluginBinding.applicationContext
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "initialize" -> {
                 val host = call.argument<String>("host") ?: ""
-                initializeSDK(call.context(), host, result)
+                initializeSDK(context, host, result)
             }
 
             "is_initialized" -> {
