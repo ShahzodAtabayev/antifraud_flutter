@@ -2,7 +2,7 @@ import 'package:either_dart/either.dart';
 
 import 'antifraud_flutter_platform_interface.dart';
 
-sealed class AntifraudFlutter {
+final class AntifraudFlutter {
   Future<Either<String, void>> initialize({required String host}) {
     return AntifraudFlutterPlatform.instance.initialize(host: host);
   }

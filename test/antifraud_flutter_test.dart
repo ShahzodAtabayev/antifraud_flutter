@@ -61,7 +61,7 @@ void main() {
       MockAntifraudFlutterPlatform fakePlatform = MockAntifraudFlutterPlatform();
       AntifraudFlutterPlatform.instance = fakePlatform;
 
-      expect(await AntifraudFlutter.initialize(host: ''), null);
+      expect(await AntifraudFlutter().initialize(host: ''), null);
     },
   );
 }
