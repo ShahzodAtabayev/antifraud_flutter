@@ -61,5 +61,5 @@ dependencies {
     /**
      * AntiFraud Core SDK
      */
-    implementation("uz.tbm.antifraud:sdk:1.0.8")
+    implementation("uz.tbm.antifraud:sdk:1.1.0")
 }
