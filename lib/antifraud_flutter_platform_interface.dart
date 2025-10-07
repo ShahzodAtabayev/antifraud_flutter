@@ -1,3 +1,4 @@
+import 'package:antifraud_flutter/src/core/models/failure.dart';
 import 'package:either_dart/either.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -24,35 +25,35 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Either<String, void>> initialize({required String host}) {
+  Future<Either<Failure, void>> initialize({required String host}) {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
-  Future<Either<String, bool>> isInitialized() {
+  Future<Either<Failure, bool>> isInitialized() {
     throw UnimplementedError('initialized() has not been implemented.');
   }
 
-  Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) {
+  Future<Either<Failure, void>> verifySMSCode({required String phoneNumber, required String code}) {
     throw UnimplementedError('verifySMSCode() has not been implemented.');
   }
 
-  Future<Either<String, void>> detectFraud({required String code}) {
+  Future<Either<Failure, void>> detectFraud({required String code}) {
     throw UnimplementedError('detectFraud() has not been implemented.');
   }
 
-  Future<Either<String, void>> makeOperation() {
+  Future<Either<Failure, void>> makeOperation() {
     throw UnimplementedError('makeOperation() has not been implemented.');
   }
 
-  Future<Either<String, void>> confirmFace({required String document, required String birthDate}) {
+  Future<Either<Failure, void>> confirmFace({required String document, required String birthDate}) {
     throw UnimplementedError('confirmFace() has not been implemented.');
   }
 
-  Future<Either<String, String>> getClientInstanceId() {
+  Future<Either<Failure, String>> getClientInstanceId() {
     throw UnimplementedError('getClientInstanceId() has not been implemented.');
   }
 
-  Future<Either<String, void>> logout() {
+  Future<Either<Failure, void>> logout() {
     throw UnimplementedError('logout() has not been implemented.');
   }
 }

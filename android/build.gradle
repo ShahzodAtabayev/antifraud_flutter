@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.4")
+        classpath("com.android.tools.build:gradle:8.11.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -19,7 +19,7 @@ apply plugin: "kotlin-android"
 
 android {
     namespace "uz.tbm.antifraud_flutter.antifraud_flutter"
-    compileSdk 34
+    compileSdk 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -41,7 +41,7 @@ android {
 
     dependencies {
         testImplementation("org.jetbrains.kotlin:kotlin-test")
-        testImplementation("org.mockito:mockito-core:5.1.0")
+        testImplementation("org.mockito:mockito-core:5.20.0")
     }
 
     testOptions {

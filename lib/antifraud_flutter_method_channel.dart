@@ -1,3 +1,4 @@
+import 'package:antifraud_flutter/src/core/models/failure.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +12,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   final methodChannel = const MethodChannel('antifraud_flutter');
 
   @override
-  Future<Either<String, void>> initialize({required String host}) async {
+  Future<Either<Failure, void>> initialize({required String host}) async {
     try {
       await methodChannel.invokeMethod<void>('initialize', {'host': host});
       return const Right(null);
@@ -20,12 +21,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, bool>> isInitialized() async {
+  Future<Either<Failure, bool>> isInitialized() async {
     try {
       final result = await methodChannel.invokeMethod<bool?>('is_initialized');
       return Right(result ?? false);
@@ -34,12 +35,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) async {
+  Future<Either<Failure, void>> verifySMSCode({required String phoneNumber, required String code}) async {
     try {
       await methodChannel.invokeMethod<void>(
         'verify_sms_code',
@@ -51,12 +52,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, void>> detectFraud({required String code}) async {
+  Future<Either<Failure, void>> detectFraud({required String code}) async {
     try {
       await methodChannel.invokeMethod<void>('detect_fraud', {'code': code});
       return const Right(null);
@@ -65,12 +66,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, void>> makeOperation() async {
+  Future<Either<Failure, void>> makeOperation() async {
     try {
       await methodChannel.invokeMethod<void>('make_operation');
       return const Right(null);
@@ -79,12 +80,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, void>> confirmFace({required String document, required String birthDate}) async {
+  Future<Either<Failure, void>> confirmFace({required String document, required String birthDate}) async {
     try {
       await methodChannel.invokeMethod<void>('confirm_face', {'document': document, 'birth_date': birthDate});
       return const Right(null);
@@ -93,12 +94,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, String>> getClientInstanceId() async {
+  Future<Either<Failure, String>> getClientInstanceId() async {
     try {
       final result = await methodChannel.invokeMethod<String>('get_client_instance_id');
       return Right(result ?? '');
@@ -107,17 +108,17 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<String, void>> logout() async {
+  Future<Either<Failure, void>> logout() async {
     try {
       await methodChannel.invokeMethod<void>('logout');
       return const Right(null);
     } on PlatformException catch (e) {
-      return Left(e.message ?? '');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
 }

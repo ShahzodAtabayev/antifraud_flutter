@@ -95,7 +95,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .failure(let error):
                 result(
                     FlutterError(
-                        code: "INIT_ERROR", message: error.localizedDescription,
+                        code: "\(error.code)", message: error.message,
                         details: nil))
             @unknown default:
                 result(
@@ -128,8 +128,8 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .failure(let error):
                 result(
                     FlutterError(
-                        code: "VERIFY_ERROR",
-                        message: error.localizedDescription, details: nil))
+                        code: "\(error.code)", message: error.message,
+                        details: nil))
             @unknown default:
                 result(
                     FlutterError(
@@ -139,7 +139,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
 
         }
     }
-    
+
     private func getClientInstanceId(result: @escaping FlutterResult) {
         guard let library = library else {
             result(
@@ -176,8 +176,8 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .failure(let error):
                 result(
                     FlutterError(
-                        code: "CONFIRM_FACE_ERROR",
-                        message: error.localizedDescription, details: nil))
+                        code: "\(error.code)", message: error.message,
+                        details: nil))
             @unknown default:
                 result(
                     FlutterError(
@@ -203,8 +203,8 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .failure(let error):
                 result(
                     FlutterError(
-                        code: "DETECT_FRAUD_ERROR",
-                        message: error.localizedDescription, details: nil))
+                        code: "\(error.code)", message: error.message,
+                        details: nil))
             @unknown default:
                 result(
                     FlutterError(
@@ -229,8 +229,8 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .failure(let error):
                 result(
                     FlutterError(
-                        code: "MAKE_OPERATION_ERROR",
-                        message: error.localizedDescription, details: nil))
+                        code: "\(error.code)", message: error.message,
+                        details: nil))
             @unknown default:
                 result(
                     FlutterError(
@@ -256,8 +256,8 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             case .failure(let error):
                 result(
                     FlutterError(
-                        code: "LOGOUT_ERROR",
-                        message: error.localizedDescription, details: nil))
+                        code: "\(error.code)", message: error.message,
+                        details: nil))
             @unknown default:
                 result(
                     FlutterError(
