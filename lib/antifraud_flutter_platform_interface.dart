@@ -48,6 +48,10 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('confirmFace() has not been implemented.');
   }
 
+  Future<Either<String, String>> getClientInstanceId() {
+    throw UnimplementedError('getClientInstanceId() has not been implemented.');
+  }
+
   Future<Either<String, void>> logout() {
     throw UnimplementedError('logout() has not been implemented.');
   }

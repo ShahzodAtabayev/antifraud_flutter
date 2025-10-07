@@ -43,6 +43,12 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
     // TODO: implement makeOperation
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<String, String>> getClientInstanceId() {
+    // TODO: implement getClientInstanceId
+    throw UnimplementedError();
+  }
 }
 
 void main() {

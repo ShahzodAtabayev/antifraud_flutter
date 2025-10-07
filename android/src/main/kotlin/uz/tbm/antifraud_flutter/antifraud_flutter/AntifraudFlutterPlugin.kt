@@ -25,6 +25,15 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 initializeSDK(call.context(), host, result)
             }
 
+            "is_initialized" -> {
+                val isInitialized = isSDKInitialized(result)
+                result.success(isInitialized);
+            }
+
+            "get_client_instance_id" -> {
+                getClientInstanceId(result)
+            }
+
             "verify_sms_code" -> {
                 val code = call.argument<String>("code") ?: ""
                 val phoneNumber = call.argument<String>("phone_number") ?: ""
@@ -154,6 +163,20 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             false
         } else {
             true
+        }
+    }
+
+    private fun getClientInstanceId(result: MethodChannel.Result): Unit {
+        if (!isSDKInitialized(result)) return
+        sdk!!.getClientInstanceId { r ->
+            r.onSuccess {
+                Log.d("AntifraudFlutterPlugin", "Get Client InstanceId successfull")
+                result.success(it)
+            }
+            r.onFailure {
+                Log.e("AntifraudFlutterPlugin", "Make Operation failed: ${it.message}")
+                result.error("MAKE_OPERATION_ERROR", it.message, null)
+            }
         }
     }
 

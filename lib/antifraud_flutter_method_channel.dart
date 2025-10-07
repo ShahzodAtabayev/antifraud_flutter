@@ -16,6 +16,10 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       await methodChannel.invokeMethod<void>('initialize', {'host': host});
       return const Right(null);
     } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
@@ -23,9 +27,13 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   @override
   Future<Either<String, bool>> isInitialized() async {
     try {
-      final result = await methodChannel.invokeMethod<bool?>('initialized');
+      final result = await methodChannel.invokeMethod<bool?>('is_initialized');
       return Right(result ?? false);
     } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
@@ -39,6 +47,10 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       );
       return const Right(null);
     } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
@@ -49,6 +61,10 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       await methodChannel.invokeMethod<void>('detect_fraud', {'code': code});
       return const Right(null);
     } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
@@ -59,6 +75,10 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       await methodChannel.invokeMethod<void>('make_operation');
       return const Right(null);
     } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
@@ -69,10 +89,24 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
       await methodChannel.invokeMethod<void>('confirm_face', {'document': document, 'birth_date': birthDate});
       return const Right(null);
     } on PlatformException catch (e) {
-      print('s-================= ${e.code}');
-      print('s-================= ${e.message}');
-      print('s-================= ${e.details}');
-      print('s-================= ${e.stacktrace}');
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
+      return Left(e.message ?? '');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> getClientInstanceId() async {
+    try {
+      final result = await methodChannel.invokeMethod<String>('get_client_instance_id');
+      return Right(result ?? '');
+    } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
       return Left(e.message ?? '');
     }
   }
