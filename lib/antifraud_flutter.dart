@@ -11,6 +11,10 @@ final class AntifraudFlutter {
     return AntifraudFlutterPlatform.instance.isInitialized();
   }
 
+  Future<Either<String, String>> getClientInstanceId() {
+    return AntifraudFlutterPlatform.instance.getClientInstanceId();
+  }
+
   Future<Either<String, void>> verifySMSCode({required String phoneNumber, required String code}) {
     return AntifraudFlutterPlatform.instance.verifySMSCode(code: code, phoneNumber: phoneNumber);
   }
