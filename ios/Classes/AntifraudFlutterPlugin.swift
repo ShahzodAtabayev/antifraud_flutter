@@ -16,7 +16,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         _ call: FlutterMethodCall, result: @escaping FlutterResult
     ) {
         switch call.method {
-        case "initialize":
+        case "init":
             guard let args = call.arguments as? [String: Any],
                   let host = args["host"] as? String
             else {
@@ -26,9 +26,23 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
                         message: "Invalid arguments passed", details: nil))
                 return
             }
-            initialize(host: host, result: result)
+            library = AntiFraudLibrary(host: host)
             return
+
+        case "initialize":
+            initialize(result: result)
+            return
+
         case "is_initialized":
+            guard let args = call.arguments as? [String: Any],
+                  let host = args["host"] as? String
+            else {
+                result(
+                    FlutterError(
+                        code: "INVALID_ARGUMENTS",
+                        message: "Invalid arguments passed", details: nil))
+                return
+            }
             isInitialized(result: result)
             return
         case "get_client_instance_id":
@@ -85,9 +99,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    private func initialize(host: String, result: @escaping FlutterResult) {
-        library = AntiFraudLibrary(host: host)
-
+    private func initialize( result: @escaping FlutterResult) {
         library?.initialization { response in
             switch response {
             case .success:
@@ -105,7 +117,8 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             }
         }
     }
-    private func isInitialized(result: @escaping FlutterResult) {
+
+    private func isInitialized(host: String, result: @escaping FlutterResult) {
         let isInitialized = library?.isInitialized()
         result(isInitialized ?? false)
     }

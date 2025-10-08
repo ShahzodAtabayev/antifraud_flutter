@@ -23,12 +23,12 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     try {
       /// Anti Fraud SDK
-      final result = await AntifraudFlutter().initialize(host: 'http://172.30.136.12:8080');
+      final result = await AntifraudFlutter(host: '').initialize();
       result.fold(
         (f) {},
         (r) {},
       );
-      final isInitialized = await AntifraudFlutter().isInitialized();
+      final isInitialized = await AntifraudFlutter(host: '').isInitialized();
       isInitialized.fold(
         (f) {},
         (r) {},

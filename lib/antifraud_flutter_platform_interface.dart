@@ -25,7 +25,11 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Either<Failure, void>> initialize({required String host}) {
+  Future<Either<Failure, void>> init({required String host}) {
+    throw UnimplementedError('init() has not been implemented.');
+  }
+
+  Future<Either<Failure, void>> initialize() {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 

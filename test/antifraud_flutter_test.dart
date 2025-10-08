@@ -8,7 +8,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements AntifraudFlutterPlatform {
   @override
-  Future<Either<Failure, void>> initialize({required String host}) {
+  Future<Either<Failure, void>> initialize() {
     throw UnimplementedError();
   }
 
@@ -50,6 +50,12 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
     // TODO: implement getClientInstanceId
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, void>> init({required String host}) {
+    // TODO: implement init
+    throw UnimplementedError();
+  }
 }
 
 void main() {
@@ -68,7 +74,7 @@ void main() {
       MockAntifraudFlutterPlatform fakePlatform = MockAntifraudFlutterPlatform();
       AntifraudFlutterPlatform.instance = fakePlatform;
 
-      expect(await AntifraudFlutter().initialize(host: ''), null);
+      expect(await AntifraudFlutter(host: '').initialize(), null);
     },
   );
 }

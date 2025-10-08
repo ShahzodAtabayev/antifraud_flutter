@@ -15,7 +15,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final result = await AntifraudFlutter().initialize(host: '');
+    final result = await AntifraudFlutter(host: '').initialize();
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
     expect(result.isRight, true);

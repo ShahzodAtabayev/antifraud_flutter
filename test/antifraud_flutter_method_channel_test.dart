@@ -27,6 +27,6 @@ void main() {
   });
 
   test('initialize', () async {
-    expect(await platform.initialize(host: ''), null);
+    expect(await platform.initialize(), null);
   });
 }

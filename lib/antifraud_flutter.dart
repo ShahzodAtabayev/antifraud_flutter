@@ -4,8 +4,14 @@ import 'package:either_dart/either.dart';
 import 'antifraud_flutter_platform_interface.dart';
 
 final class AntifraudFlutter {
-  Future<Either<Failure, void>> initialize({required String host}) {
-    return AntifraudFlutterPlatform.instance.initialize(host: host);
+  final String host;
+
+  AntifraudFlutter({required this.host}) {
+    AntifraudFlutterPlatform.instance.init(host: host);
+  }
+
+  Future<Either<Failure, void>> initialize() {
+    return AntifraudFlutterPlatform.instance.initialize();
   }
 
   Future<Either<Failure, bool>> isInitialized() {

@@ -22,13 +22,20 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "initialize" -> {
+            "init" -> {
                 val host = call.argument<String>("host") ?: ""
-                initializeSDK(context, host, result)
+                sdk = AntiFraudLibrary(
+                    host = host,
+                    context = context,
+                )
+            }
+
+            "initialize" -> {
+                initializeSDK(result)
             }
 
             "is_initialized" -> {
-                val isInitialized = isSDKInitialized(result)
+                val isInitialized = isSDKInitialized()
                 result.success(isInitialized);
             }
 
@@ -61,17 +68,15 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
+    private fun isSDKInitialized(): Boolean {
+        return sdk?.isInitialized() ?: false;
+    }
+
     private fun initializeSDK(
-        context: Context,
-        host: String,
         result: MethodChannel.Result
     ) {
         try {
-            sdk = AntiFraudLibrary(
-                host = host,
-                context = context,
-            )
-            sdk!!.initialize { r ->
+            sdk?.initialize { r ->
                 r.onSuccess {
                     Log.d("AntifraudFlutterPlugin", "SDK initialized successfully")
                     result.success("SDK initialized successfully")
@@ -88,7 +93,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun verifySMSCode(code: String, phoneNumber: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized(result)) return
+        if (!isSDKInitialized()) return
         sdk!!.verifySmsCode(code = code, phoneNumber = phoneNumber) { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "SMS code verified successfully")
@@ -103,7 +108,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
 
     private fun confirmFace(document: String, birthDate: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized(result)) return
+        if (!isSDKInitialized()) return
         sdk!!.confirmFace(document = document, birthDate = birthDate) { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Confirm face successfully")
@@ -117,7 +122,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun detectFraud(code: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized(result)) return
+        if (!isSDKInitialized()) return
         sdk!!.detectFraud(code = code) { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Detect fraud successfully")
@@ -131,10 +136,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun logout(result: MethodChannel.Result) {
-        if (!isSDKInitialized(result)) return
+        if (!isSDKInitialized()) return
         sdk!!.logout { r ->
             r.onSuccess {
-                Log.d("AntifraudFlutterPlugin", "Logout successful")
+                Log.d("AntifraudFlutterPlugin", "Logout successfull")
                 result.success("Logout successful")
             }
             r.onFailure {
@@ -145,10 +150,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun makeOperation(result: MethodChannel.Result) {
-        if (!isSDKInitialized(result)) return
+        if (!isSDKInitialized()) return
         sdk!!.makeOperation { r ->
             r.onSuccess {
-                Log.d("AntifraudFlutterPlugin", "Make Operation successful")
+                Log.d("AntifraudFlutterPlugin", "Make Operation successfull")
                 result.success("Make Operation successful")
             }
             r.onFailure {
@@ -158,17 +163,8 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
-    private fun isSDKInitialized(result: MethodChannel.Result): Boolean {
-        return if (sdk == null || sdk?.isInitialized() != true) {
-            Log.e("AntifraudFlutterPlugin", "SDK is not initialized")
-            false
-        } else {
-            true
-        }
-    }
-
     private fun getClientInstanceId(result: MethodChannel.Result): Unit {
-        if (!isSDKInitialized(result)) return
+        if (!isSDKInitialized()) return
         sdk!!.getClientInstanceId { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Get Client InstanceId successfull")

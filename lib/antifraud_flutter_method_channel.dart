@@ -12,9 +12,23 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   final methodChannel = const MethodChannel('antifraud_flutter');
 
   @override
-  Future<Either<Failure, void>> initialize({required String host}) async {
+  Future<Either<Failure, void>> init({required String host}) async {
     try {
-      await methodChannel.invokeMethod<void>('initialize', {'host': host});
+      await methodChannel.invokeMethod<void>('init', {'host': host});
+      return const Right(null);
+    } on PlatformException catch (e) {
+      debugPrint('PlatformException.code: ${e.code}');
+      debugPrint('PlatformException.message: ${e.message}');
+      debugPrint('PlatformException.details: ${e.details}');
+      debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
+      return Left(Failure(code: e.code, message: e.message ?? ''));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> initialize() async {
+    try {
+      await methodChannel.invokeMethod<void>('initialize');
       return const Right(null);
     } on PlatformException catch (e) {
       debugPrint('PlatformException.code: ${e.code}');
