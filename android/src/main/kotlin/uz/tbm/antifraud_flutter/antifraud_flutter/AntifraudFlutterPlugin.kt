@@ -161,7 +161,6 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     private fun isSDKInitialized(result: MethodChannel.Result): Boolean {
         return if (sdk == null || sdk?.isInitialized() != true) {
             Log.e("AntifraudFlutterPlugin", "SDK is not initialized")
-            result.error("INIT_ERROR", "SDK is not initialized. Please initialize first.", null)
             false
         } else {
             true
