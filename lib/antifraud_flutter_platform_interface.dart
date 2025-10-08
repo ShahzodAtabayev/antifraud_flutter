@@ -33,7 +33,7 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
-  Future<Either<Failure, bool>> isInitialized() {
+  Future<bool> isInitialized() {
     throw UnimplementedError('initialized() has not been implemented.');
   }
 

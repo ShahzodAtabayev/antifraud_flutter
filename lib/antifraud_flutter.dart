@@ -14,7 +14,7 @@ final class AntifraudFlutter {
     return AntifraudFlutterPlatform.instance.initialize();
   }
 
-  Future<Either<Failure, bool>> isInitialized() {
+  Future<bool> isInitialized() {
     return AntifraudFlutterPlatform.instance.isInitialized();
   }
 

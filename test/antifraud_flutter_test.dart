@@ -13,7 +13,7 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   }
 
   @override
-  Future<Either<Failure, bool>> isInitialized() {
+  Future<bool> isInitialized() {
     throw UnimplementedError();
   }
 

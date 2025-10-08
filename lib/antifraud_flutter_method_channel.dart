@@ -40,16 +40,16 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   }
 
   @override
-  Future<Either<Failure, bool>> isInitialized() async {
+  Future<bool> isInitialized() async {
     try {
       final result = await methodChannel.invokeMethod<bool?>('is_initialized');
-      return Right(result ?? false);
+      return result ?? false;
     } on PlatformException catch (e) {
       debugPrint('PlatformException.code: ${e.code}');
       debugPrint('PlatformException.message: ${e.message}');
       debugPrint('PlatformException.details: ${e.details}');
       debugPrint('PlatformException.stacktrace: ${e.stacktrace}');
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return false;
     }
   }
 

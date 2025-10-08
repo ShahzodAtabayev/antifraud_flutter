@@ -28,11 +28,7 @@ class _MyAppState extends State<MyApp> {
         (f) {},
         (r) {},
       );
-      final isInitialized = await AntifraudFlutter(host: '').isInitialized();
-      isInitialized.fold(
-        (f) {},
-        (r) {},
-      );
+      await AntifraudFlutter(host: '').isInitialized();
     } catch (_) {}
   }
 
