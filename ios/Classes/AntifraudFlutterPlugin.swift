@@ -34,20 +34,13 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             return
 
         case "is_initialized":
-            guard let args = call.arguments as? [String: Any],
-                  let host = args["host"] as? String
-            else {
-                result(
-                    FlutterError(
-                        code: "INVALID_ARGUMENTS",
-                        message: "Invalid arguments passed", details: nil))
-                return
-            }
             isInitialized(result: result)
             return
+
         case "get_client_instance_id":
             getClientInstanceId(result: result)
             return
+
         case "verify_sms_code":
             guard let args = call.arguments as? [String: Any],
                   let phoneNumber = args["phone_number"] as? String,
@@ -62,6 +55,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             verifySmsCode(
                 phoneNumber: phoneNumber, smsCode: smsCode, result: result)
             return
+
         case "detect_fraud":
             guard let args = call.arguments as? [String: Any],
                   let smsCode = args["code"] as? String
@@ -78,6 +72,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         case "make_operation":
             makeOperation(result: result)
             return
+
         case "confirm_face":
             guard let args = call.arguments as? [String: Any],
                   let document = args["document"] as? String,
@@ -91,9 +86,11 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
             }
             confirmFace(birthDate: birthDate, document: document, result: result)
             return
+
         case "logout":
             logout(result: result)
             return
+
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -118,7 +115,7 @@ public class AntifraudFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    private func isInitialized(host: String, result: @escaping FlutterResult) {
+    private func isInitialized(result: @escaping FlutterResult) {
         let isInitialized = library?.isInitialized()
         result(isInitialized ?? false)
     }
