@@ -52,7 +52,7 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   }
 
   @override
-  Future<Either<Failure, void>> init({required String host, bool enableChuck = false}) {
+  Future<Either<Failure, void>> init({required String host, AntifraudFlutterLogger? logger}) {
     // TODO: implement init
     throw UnimplementedError();
   }

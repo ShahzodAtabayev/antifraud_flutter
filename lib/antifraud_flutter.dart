@@ -5,9 +5,10 @@ import 'antifraud_flutter_platform_interface.dart';
 
 final class AntifraudFlutter {
   final String host;
+  final AntifraudFlutterLogger? logger;
 
-  AntifraudFlutter({required this.host, bool enableChuck = false}) {
-    AntifraudFlutterPlatform.instance.init(host: host, enableChuck: enableChuck);
+  AntifraudFlutter({required this.host, this.logger}) {
+    AntifraudFlutterPlatform.instance.init(host: host, logger: logger);
   }
 
   Future<Either<Failure, void>> initialize() {
@@ -41,4 +42,14 @@ final class AntifraudFlutter {
   Future<Either<Failure, void>> logout() {
     return AntifraudFlutterPlatform.instance.logout();
   }
+}
+
+abstract class AntifraudFlutterLogger {
+  void logChuck({
+    required String host,
+    required String method,
+    Map<String, dynamic>? request,
+    Map<String, dynamic>? response,
+    int statusCode = 200,
+  });
 }

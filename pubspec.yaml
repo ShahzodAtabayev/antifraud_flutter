@@ -13,10 +13,6 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.1.8
   either_dart: ^1.0.0
-  chuck_interceptor:
-    git:
-      url: https://github.com/SunnatilloShavkatov/chuck_interceptor.git
-      ref: beelab
 
 dev_dependencies:
   flutter_test:

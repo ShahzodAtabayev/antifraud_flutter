@@ -1,3 +1,4 @@
+import 'package:antifraud_flutter/antifraud_flutter.dart';
 import 'package:antifraud_flutter/src/core/models/failure.dart';
 import 'package:either_dart/either.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -25,7 +26,7 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Either<Failure, void>> init({required String host, bool enableChuck = false}) {
+  Future<Either<Failure, void>> init({required String host, AntifraudFlutterLogger? logger}) {
     throw UnimplementedError('init() has not been implemented.');
   }
 

@@ -1,8 +1,5 @@
+import 'package:antifraud_flutter/antifraud_flutter.dart';
 import 'package:antifraud_flutter/src/core/models/failure.dart';
-import 'package:chuck_interceptor/chuck.dart';
-import 'package:chuck_interceptor/model/chuck_http_call.dart';
-import 'package:chuck_interceptor/model/chuck_http_request.dart';
-import 'package:chuck_interceptor/model/chuck_http_response.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -11,45 +8,31 @@ import 'antifraud_flutter_platform_interface.dart';
 
 const _tag = 'Telecom AF --->';
 
-Chuck _chuck = Chuck();
-
 /// An implementation of [AntifraudFlutterPlatform] that uses method channels.
 class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('antifraud_flutter');
 
-  String _host = '';
+  AntifraudFlutterLogger? _logger;
 
-  bool _enableChuck = false;
+  String _host = '';
 
   void _printLog(String message,
       {String method = '', Map<String, dynamic>? request, Map<String, dynamic>? response, int statusCode = 200}) {
     if (kDebugMode) {
       debugPrint('$_tag $message');
     }
-    if (_enableChuck) {
-      final ChuckHttpCall call = ChuckHttpCall(message.hashCode, DateTime.now());
-      call.server = _host;
-      call.endpoint = method;
-      call.method = 'POST';
-      call.request = ChuckHttpRequest(time: DateTime.now(), size: 1, body: request);
-      call.response = ChuckHttpResponse(
-        body: response,
-        status: statusCode,
-        time: DateTime.now(),
-        headers: {'Content-Type': 'application/json'},
-      );
-      call.loading = false;
-      _chuck.getDioInterceptor().chuckCore.addCall(call);
+    if (_logger != null) {
+      _logger!.logChuck(method: method, statusCode: statusCode, response: response, request: request, host: _host);
     }
   }
 
   @override
-  Future<Either<Failure, void>> init({required String host, bool enableChuck = false}) async {
+  Future<Either<Failure, void>> init({required String host, AntifraudFlutterLogger? logger}) async {
     try {
       _host = host;
-      _enableChuck = enableChuck;
+      _logger = logger;
       await methodChannel.invokeMethod<void>('init', {'host': host});
       _printLog('init host: $host', method: 'init', request: {'host': host});
       return const Right(null);
