@@ -6,8 +6,8 @@ import 'antifraud_flutter_platform_interface.dart';
 final class AntifraudFlutter {
   final String host;
 
-  AntifraudFlutter({required this.host}) {
-    AntifraudFlutterPlatform.instance.init(host: host);
+  AntifraudFlutter({required this.host, bool enableChuck = false}) {
+    AntifraudFlutterPlatform.instance.init(host: host, enableChuck: enableChuck);
   }
 
   Future<Either<Failure, void>> initialize() {
