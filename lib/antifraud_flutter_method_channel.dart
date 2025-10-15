@@ -66,11 +66,11 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   Future<bool> isInitialized() async {
     try {
       final result = await methodChannel.invokeMethod<bool?>('is_initialized');
-      _printLog('isInitialized', method: 'isInitialized', request: {}, response: {});
+      _printLog('is_initialized', method: 'is-initialized', request: {}, response: {'is_initialized': result});
       return result ?? false;
     } on PlatformException catch (e) {
       _printLog('${e.code} ${e.message}\n${e.stacktrace}',
-          request: {}, statusCode: 500, method: 'isInitialized', response: {'message': e.message, 'code': e.code});
+          request: {}, statusCode: 500, method: 'is-initialized', response: {'message': e.message, 'code': e.code});
       return false;
     }
   }
@@ -83,13 +83,13 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
         {'phone_number': phoneNumber, 'code': code},
       );
       _printLog('verifySMSCode phoneNumber: $phoneNumber, code: $code',
-          method: 'verify_sms_code', request: {'phone_number': phoneNumber, 'code': code}, response: {});
+          method: 'verify-sms-code', request: {'phone_number': phoneNumber, 'code': code}, response: {});
       return const Right(null);
     } on PlatformException catch (e) {
       _printLog(
         'verifySMSCode error: ${e.code} ${e.message}\n${e.stacktrace}',
         statusCode: 500,
-        method: 'verify_sms_code',
+        method: 'verify-sms-code',
         response: {'message': e.message, 'code': e.code},
         request: {'phone_number': phoneNumber, 'code': code},
       );
@@ -101,12 +101,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   Future<Either<Failure, void>> detectFraud({required String code}) async {
     try {
       await methodChannel.invokeMethod<void>('detect_fraud', {'code': code});
-      _printLog('detectFraud code: $code', method: 'detect_fraud', request: {'code': code}, response: {});
+      _printLog('detectFraud code: $code', method: 'detect-fraud', request: {'code': code}, response: {});
       return const Right(null);
     } on PlatformException catch (e) {
       _printLog('detectFraud error: ${e.code} ${e.message}\n${e.stacktrace}',
           statusCode: 500,
-          method: 'detect_fraud',
+          method: 'detect-fraud',
           request: {'code': code},
           response: {'message': e.message, 'code': e.code});
       return Left(Failure(code: e.code, message: e.message ?? ''));
@@ -117,11 +117,11 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   Future<Either<Failure, void>> makeOperation() async {
     try {
       await methodChannel.invokeMethod<void>('make_operation');
-      _printLog('makeOperation', method: 'make_operation', request: {}, response: {});
+      _printLog('makeOperation', method: 'make-operation', request: {}, response: {});
       return const Right(null);
     } on PlatformException catch (e) {
       _printLog('makeOperation error: ${e.code} ${e.message}\n${e.stacktrace}',
-          request: {}, statusCode: 500, method: 'make_operation', response: {'message': e.message, 'code': e.code});
+          request: {}, statusCode: 500, method: 'make-operation', response: {'message': e.message, 'code': e.code});
       return Left(Failure(code: e.code, message: e.message ?? ''));
     }
   }
@@ -131,13 +131,13 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
     try {
       await methodChannel.invokeMethod<void>('confirm_face', {'document': document, 'birth_date': birthDate});
       _printLog('confirmFace document: $document, birthDate: $birthDate',
-          method: 'confirm_face', request: {'document': document, 'birth_date': birthDate}, response: {});
+          method: 'confirm-face', request: {'document': document, 'birth_date': birthDate}, response: {});
       return const Right(null);
     } on PlatformException catch (e) {
       _printLog(
         'confirmFace error ${e.code} ${e.message}\n${e.stacktrace}',
         statusCode: 500,
-        method: 'confirm_face',
+        method: 'confirm-face',
         response: {'message': e.message, 'code': e.code},
         request: {'document': document, 'birth_date': birthDate},
       );
@@ -149,8 +149,8 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   Future<Either<Failure, String>> getClientInstanceId() async {
     try {
       final result = await methodChannel.invokeMethod<String>('get_client_instance_id');
-      _printLog('getClientInstanceId: $result',
-          request: {}, method: 'get_client_instance_id', response: {'client_instance_id': result});
+      _printLog('get_client_instance_id: $result',
+          request: {}, method: 'get-client-instance-id', response: {'client_instance_id': result});
       return Right(result ?? '');
     } on PlatformException catch (e) {
       _printLog('getClientInstanceId error ${e.code} ${e.message}\n${e.stacktrace}',
