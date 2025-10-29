@@ -93,7 +93,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun verifySMSCode(code: String, phoneNumber: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized()) return
+        if (!isSDKInitialized()) {
+            result.error("INIT_ERROR", 'SDK is not initialize', null)
+            return
+        }
         sdk!!.verifySmsCode(code = code, phoneNumber = phoneNumber) { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "SMS code verified successfully")
@@ -108,7 +111,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
 
     private fun confirmFace(document: String, birthDate: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized()) return
+        if (!isSDKInitialized()) {
+            result.error("INIT_ERROR", 'SDK is not initialize', null)
+            return
+        }
         sdk!!.confirmFace(document = document, birthDate = birthDate) { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Confirm face successfully")
@@ -122,7 +128,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun detectFraud(code: String, result: MethodChannel.Result) {
-        if (!isSDKInitialized()) return
+        if (!isSDKInitialized()) {
+            result.error("INIT_ERROR", 'SDK is not initialize', null)
+            return
+        }
         sdk!!.detectFraud(code = code) { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Detect fraud successfully")
@@ -136,7 +145,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun logout(result: MethodChannel.Result) {
-        if (!isSDKInitialized()) return
+        if (!isSDKInitialized()) {
+            result.error("INIT_ERROR", 'SDK is not initialize', null)
+            return
+        }
         sdk!!.logout { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Logout successfull")
@@ -150,7 +162,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun makeOperation(result: MethodChannel.Result) {
-        if (!isSDKInitialized()) return
+        if (!isSDKInitialized()) {
+            result.error("INIT_ERROR", 'SDK is not initialize', null)
+            return
+        }
         sdk!!.makeOperation { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Make Operation successfull")
@@ -164,7 +179,10 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     }
 
     private fun getClientInstanceId(result: MethodChannel.Result): Unit {
-        if (!isSDKInitialized()) return
+        if (!isSDKInitialized()) {
+            result.error("INIT_ERROR", 'SDK is not initialize', null)
+            return
+        }
         sdk!!.getClientInstanceId { r ->
             r.onSuccess {
                 Log.d("AntifraudFlutterPlugin", "Get Client InstanceId successfull")
