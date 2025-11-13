@@ -1,6 +1,6 @@
-class Failure {
+class TAFFailure {
   final String code;
   final String message;
 
-  Failure({required this.code, required this.message});
+  TAFFailure({required this.code, required this.message});
 }

@@ -26,11 +26,11 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Either<Failure, void>> init({required String host, AntifraudFlutterLogger? logger}) {
+  Future<Either<TAFFailure, void>> init({required String host, AntifraudFlutterLogger? logger}) {
     throw UnimplementedError('init() has not been implemented.');
   }
 
-  Future<Either<Failure, void>> initialize() {
+  Future<Either<TAFFailure, void>> initialize() {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
@@ -38,27 +38,27 @@ abstract class AntifraudFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('initialized() has not been implemented.');
   }
 
-  Future<Either<Failure, void>> verifySMSCode({required String phoneNumber, required String code}) {
+  Future<Either<TAFFailure, void>> verifySMSCode({required String phoneNumber, required String code}) {
     throw UnimplementedError('verifySMSCode() has not been implemented.');
   }
 
-  Future<Either<Failure, void>> detectFraud({required String code}) {
+  Future<Either<TAFFailure, void>> detectFraud({required String code}) {
     throw UnimplementedError('detectFraud() has not been implemented.');
   }
 
-  Future<Either<Failure, void>> makeOperation() {
+  Future<Either<TAFFailure, void>> makeOperation() {
     throw UnimplementedError('makeOperation() has not been implemented.');
   }
 
-  Future<Either<Failure, void>> confirmFace({required String document, required String birthDate}) {
+  Future<Either<TAFFailure, void>> confirmFace({required String document, required String birthDate}) {
     throw UnimplementedError('confirmFace() has not been implemented.');
   }
 
-  Future<Either<Failure, String>> getClientInstanceId() {
+  Future<String?> getClientInstanceId() {
     throw UnimplementedError('getClientInstanceId() has not been implemented.');
   }
 
-  Future<Either<Failure, void>> logout() {
+  Future<Either<TAFFailure, void>> logout() {
     throw UnimplementedError('logout() has not been implemented.');
   }
 }

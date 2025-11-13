@@ -8,7 +8,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements AntifraudFlutterPlatform {
   @override
-  Future<Either<Failure, void>> initialize() {
+  Future<Either<TAFFailure, void>> initialize() {
     throw UnimplementedError();
   }
 
@@ -18,41 +18,41 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   }
 
   @override
-  Future<Either<Failure, void>> logout() {
+  Future<Either<TAFFailure, void>> logout() {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, void>> verifySMSCode({required String phoneNumber, required String code}) {
+  Future<Either<TAFFailure, void>> verifySMSCode({required String phoneNumber, required String code}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, void>> detectFraud({required String code}) {
+  Future<Either<TAFFailure, void>> detectFraud({required String code}) {
     // TODO: implement detectFraud
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, void>> confirmFace({required String document, required String birthDate}) {
+  Future<Either<TAFFailure, void>> confirmFace({required String document, required String birthDate}) {
     // TODO: implement confirmFace
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, void>> makeOperation() {
+  Future<Either<TAFFailure, void>> makeOperation() {
     // TODO: implement makeOperation
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, String>> getClientInstanceId() {
+  Future<Either<TAFFailure, String>> getClientInstanceId() {
     // TODO: implement getClientInstanceId
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, void>> init({required String host, AntifraudFlutterLogger? logger}) {
+  Future<Either<TAFFailure, void>> init({required String host, AntifraudFlutterLogger? logger}) {
     // TODO: implement init
     throw UnimplementedError();
   }

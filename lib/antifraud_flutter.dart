@@ -3,7 +3,7 @@ import 'package:either_dart/either.dart';
 
 import 'antifraud_flutter_platform_interface.dart';
 
-final class AntifraudFlutter {
+class AntifraudFlutter {
   final String host;
   final AntifraudFlutterLogger? logger;
 
@@ -11,7 +11,7 @@ final class AntifraudFlutter {
     AntifraudFlutterPlatform.instance.init(host: host, logger: logger);
   }
 
-  Future<Either<Failure, void>> initialize() {
+  Future<Either<TAFFailure, void>> initialize() {
     return AntifraudFlutterPlatform.instance.initialize();
   }
 
@@ -19,27 +19,27 @@ final class AntifraudFlutter {
     return AntifraudFlutterPlatform.instance.isInitialized();
   }
 
-  Future<Either<Failure, String>> getClientInstanceId() {
+  Future<String?> getClientInstanceId() {
     return AntifraudFlutterPlatform.instance.getClientInstanceId();
   }
 
-  Future<Either<Failure, void>> verifySMSCode({required String phoneNumber, required String code}) {
+  Future<Either<TAFFailure, void>> verifySMSCode({required String phoneNumber, required String code}) {
     return AntifraudFlutterPlatform.instance.verifySMSCode(code: code, phoneNumber: phoneNumber);
   }
 
-  Future<Either<Failure, void>> detectFraud({required String code}) {
+  Future<Either<TAFFailure, void>> detectFraud({required String code}) {
     return AntifraudFlutterPlatform.instance.detectFraud(code: code);
   }
 
-  Future<Either<Failure, void>> makeOperation() {
+  Future<Either<TAFFailure, void>> makeOperation() {
     return AntifraudFlutterPlatform.instance.makeOperation();
   }
 
-  Future<Either<Failure, void>> confirmFace({required String document, required String birthDate}) {
+  Future<Either<TAFFailure, void>> confirmFace({required String document, required String birthDate}) {
     return AntifraudFlutterPlatform.instance.confirmFace(document: document, birthDate: birthDate);
   }
 
-  Future<Either<Failure, void>> logout() {
+  Future<Either<TAFFailure, void>> logout() {
     return AntifraudFlutterPlatform.instance.logout();
   }
 }

@@ -32,7 +32,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   }
 
   @override
-  Future<Either<Failure, void>> init({required String host, AntifraudFlutterLogger? logger}) async {
+  Future<Either<TAFFailure, void>> init({required String host, AntifraudFlutterLogger? logger}) async {
     try {
       _host = host;
       _logger = logger;
@@ -42,12 +42,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
     } on PlatformException catch (e) {
       _printLog('init host error: ${e.code} ${e.message}\n${e.stacktrace}',
           statusCode: 500, method: 'init', request: {'host': host}, response: {'message': e.message, 'code': e.code});
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<Failure, void>> initialize() async {
+  Future<Either<TAFFailure, void>> initialize() async {
     try {
       await methodChannel.invokeMethod<void>('initialize');
       _printLog('initialize', method: 'initialize', request: {'host': _host}, response: {});
@@ -58,7 +58,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
           statusCode: 500,
           method: 'initialize',
           response: {'message': e.message, 'code': e.code});
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 
@@ -76,7 +76,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
   }
 
   @override
-  Future<Either<Failure, void>> verifySMSCode({required String phoneNumber, required String code}) async {
+  Future<Either<TAFFailure, void>> verifySMSCode({required String phoneNumber, required String code}) async {
     try {
       await methodChannel.invokeMethod<void>(
         'verify_sms_code',
@@ -93,12 +93,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
         response: {'message': e.message, 'code': e.code},
         request: {'phone_number': phoneNumber, 'code': code},
       );
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<Failure, void>> detectFraud({required String code}) async {
+  Future<Either<TAFFailure, void>> detectFraud({required String code}) async {
     try {
       await methodChannel.invokeMethod<void>('detect_fraud', {'code': code});
       _printLog('detectFraud code: $code', method: 'detect-fraud', request: {'code': code}, response: {});
@@ -109,12 +109,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
           method: 'detect-fraud',
           request: {'code': code},
           response: {'message': e.message, 'code': e.code});
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<Failure, void>> makeOperation() async {
+  Future<Either<TAFFailure, void>> makeOperation() async {
     try {
       await methodChannel.invokeMethod<void>('make_operation');
       _printLog('makeOperation', method: 'make-operation', request: {}, response: {});
@@ -122,12 +122,12 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
     } on PlatformException catch (e) {
       _printLog('makeOperation error: ${e.code} ${e.message}\n${e.stacktrace}',
           request: {}, statusCode: 500, method: 'make-operation', response: {'message': e.message, 'code': e.code});
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<Failure, void>> confirmFace({required String document, required String birthDate}) async {
+  Future<Either<TAFFailure, void>> confirmFace({required String document, required String birthDate}) async {
     try {
       await methodChannel.invokeMethod<void>('confirm_face', {'document': document, 'birth_date': birthDate});
       _printLog('confirmFace document: $document, birthDate: $birthDate',
@@ -141,29 +141,29 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
         response: {'message': e.message, 'code': e.code},
         request: {'document': document, 'birth_date': birthDate},
       );
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 
   @override
-  Future<Either<Failure, String>> getClientInstanceId() async {
+  Future<String?> getClientInstanceId() async {
     try {
       final result = await methodChannel.invokeMethod<String>('get_client_instance_id');
       _printLog('get_client_instance_id: $result',
           request: {}, method: 'get-client-instance-id', response: {'client_instance_id': result});
-      return Right(result ?? '');
+      return result;
     } on PlatformException catch (e) {
       _printLog('getClientInstanceId error ${e.code} ${e.message}\n${e.stacktrace}',
           request: {},
           statusCode: 500,
           method: 'get_client_instance_id',
           response: {'message': e.message, 'code': e.code});
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return null;
     }
   }
 
   @override
-  Future<Either<Failure, void>> logout() async {
+  Future<Either<TAFFailure, void>> logout() async {
     try {
       await methodChannel.invokeMethod<void>('logout');
       _printLog('logout', method: 'logout', request: {}, response: {});
@@ -171,7 +171,7 @@ class MethodChannelAntifraudFlutter extends AntifraudFlutterPlatform {
     } on PlatformException catch (e) {
       _printLog('logout error: ${e.code} ${e.message}\n${e.stacktrace}',
           request: {}, statusCode: 500, method: 'logout', response: {'message': e.message, 'code': e.code});
-      return Left(Failure(code: e.code, message: e.message ?? ''));
+      return Left(TAFFailure(code: e.code, message: e.message ?? ''));
     }
   }
 }

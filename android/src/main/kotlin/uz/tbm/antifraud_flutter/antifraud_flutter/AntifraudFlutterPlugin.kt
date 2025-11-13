@@ -94,7 +94,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun verifySMSCode(code: String, phoneNumber: String, result: MethodChannel.Result) {
         if (!isSDKInitialized()) {
-            result.error("INIT_ERROR", "SDK is not initialize", null)
+            result.error("INIT_ERROR", "SDK is not initialized", null)
             return
         }
         sdk!!.verifySmsCode(code = code, phoneNumber = phoneNumber) { r ->
@@ -112,7 +112,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun confirmFace(document: String, birthDate: String, result: MethodChannel.Result) {
         if (!isSDKInitialized()) {
-            result.error("INIT_ERROR", "SDK is not initialize", null)
+            result.error("INIT_ERROR", "SDK is not initialized", null)
             return
         }
         sdk!!.confirmFace(document = document, birthDate = birthDate) { r ->
@@ -129,7 +129,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun detectFraud(code: String, result: MethodChannel.Result) {
         if (!isSDKInitialized()) {
-            result.error("INIT_ERROR", "SDK is not initialize", null)
+            result.error("INIT_ERROR", "SDK is not initialized", null)
             return
         }
         sdk!!.detectFraud(code = code) { r ->
@@ -146,7 +146,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun logout(result: MethodChannel.Result) {
         if (!isSDKInitialized()) {
-            result.error("INIT_ERROR", "SDK is not initialize", null)
+            result.error("INIT_ERROR", "SDK is not initialized", null)
             return
         }
         sdk!!.logout { r ->
@@ -163,7 +163,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun makeOperation(result: MethodChannel.Result) {
         if (!isSDKInitialized()) {
-            result.error("INIT_ERROR", "SDK is not initialize", null)
+            result.error("INIT_ERROR", "SDK is not initialized", null)
             return
         }
         sdk!!.makeOperation { r ->
@@ -180,7 +180,7 @@ class AntifraudFlutterPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun getClientInstanceId(result: MethodChannel.Result): Unit {
         if (!isSDKInitialized()) {
-            result.error("INIT_ERROR", "SDK is not initialize", null)
+            result.error("INIT_ERROR", "SDK is not initialized", null)
             return
         }
         sdk!!.getClientInstanceId { r ->
