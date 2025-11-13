@@ -1,6 +1,7 @@
 import 'package:antifraud_flutter/src/core/models/failure.dart';
 import 'package:either_dart/either.dart';
 
+export 'package:antifraud_flutter/src/core/models/failure.dart';
 import 'antifraud_flutter_platform_interface.dart';
 
 class AntifraudFlutter {
