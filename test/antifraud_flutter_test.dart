@@ -46,7 +46,7 @@ class MockAntifraudFlutterPlatform with MockPlatformInterfaceMixin implements An
   }
 
   @override
-  Future<Either<TAFFailure, String>> getClientInstanceId() {
+  Future<String?> getClientInstanceId() {
     // TODO: implement getClientInstanceId
     throw UnimplementedError();
   }
